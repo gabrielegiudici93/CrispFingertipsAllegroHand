@@ -18,8 +18,8 @@ class CrispFingertipNode(object):
 
     offset_z0_th=1912.0;offset_z1_th=2214.0;offset_z2_th=2158.0;offset_z3_th=2011.0
     offset_z0_in=1879.0;offset_z1_in=1873.0;offset_z2_in=2163.0;offset_z3_in=2058.0
-    offset_z0_mid=1728.0;offset_z1_mid=1859.0;offset_z2_mid=1939.0;offset_z3_mid=1926.0
-    offset_z0_ring=1767.0;offset_z1_ring=1924.0;offset_z2_ring=1625.0;offset_z3_ring=1829.0
+    offset_z0_mi=1728.0;offset_z1_mi=1859.0;offset_z2_mi=1939.0;offset_z3_mi=1926.0
+    offset_z0_ri=1767.0;offset_z1_ri=1924.0;offset_z2_ri=1625.0;offset_z3_ri=1829.0
 
 
     def __init__(self):
@@ -53,6 +53,14 @@ class CrispFingertipNode(object):
         if force_sensed.sensorid == 1:
             if self.first_received_th==0:
                 if force_sensed.points[0].point.z>-10000:
+                    self.offset_x0_th=force_sensed.points[0].point.x
+                    self.offset_x1_th=force_sensed.points[1].point.x
+                    self.offset_x2_th=force_sensed.points[2].point.x
+                    self.offset_x3_th=force_sensed.points[3].point.x                          
+                    self.offset_y0_th=force_sensed.points[0].point.y
+                    self.offset_y1_th=force_sensed.points[1].point.y
+                    self.offset_y2_th=force_sensed.points[2].point.y
+                    self.offset_y3_th=force_sensed.points[3].point.y                    
                     self.offset_z0_th=force_sensed.points[0].point.z
                     self.offset_z1_th=force_sensed.points[1].point.z
                     self.offset_z2_th=force_sensed.points[2].point.z
@@ -61,11 +69,17 @@ class CrispFingertipNode(object):
                     self.first_received_th=1
                 
         #normalized force
-            n_m_x1=force_sensed.points[0].point.x - (-755);      n_m_x2=force_sensed.points[1].point.x - (-872)
-            n_m_x3=force_sensed.points[2].point.x - (38);        n_m_x4=force_sensed.points[3].point.x - (57)
+            # n_m_x1=force_sensed.points[0].point.x - (-755);      n_m_x2=force_sensed.points[1].point.x - (-872)
+            # n_m_x3=force_sensed.points[2].point.x - (38);        n_m_x4=force_sensed.points[3].point.x - (57)
 
-            n_m_y1=force_sensed.points[0].point.y - (-1096);      n_m_y2=force_sensed.points[1].point.y - (391)
-            n_m_y3=force_sensed.points[2].point.y - (164);        n_m_y4=force_sensed.points[3].point.y - (-1258)
+            # n_m_y1=force_sensed.points[0].point.y - (-1096);      n_m_y2=force_sensed.points[1].point.y - (391)
+            # n_m_y3=force_sensed.points[2].point.y - (164);        n_m_y4=force_sensed.points[3].point.y - (-1258)
+
+            n_m_x1=force_sensed.points[0].point.x - (self.offset_x0_th);      n_m_x2=force_sensed.points[1].point.x - (self.offset_x1_th)
+            n_m_x3=force_sensed.points[2].point.x - (self.offset_x2_th);        n_m_x4=force_sensed.points[3].point.x - (self.offset_x3_th)
+
+            n_m_y1=force_sensed.points[0].point.y - (self.offset_y0_th);      n_m_y2=force_sensed.points[1].point.y - (self.offset_y1_th)
+            n_m_y3=force_sensed.points[2].point.y - (self.offset_y2_th);        n_m_y4=force_sensed.points[3].point.y - (self.offset_y3_th)
 
             n_m_z1=force_sensed.points[0].point.z - (self.offset_z0_th);       n_m_z2=force_sensed.points[1].point.z - (self.offset_z1_th)
             n_m_z3=force_sensed.points[2].point.z - (self.offset_z2_th);       n_m_z4=force_sensed.points[3].point.z - (self.offset_z3_th)
@@ -95,24 +109,41 @@ class CrispFingertipNode(object):
         elif force_sensed.sensorid == 2:
             if self.first_received_ring==0:
                 if force_sensed.points[0].point.z>-10000:
-                    self.offset_z0_ring=force_sensed.points[0].point.z
-                    self.offset_z1_ring=force_sensed.points[1].point.z
-                    self.offset_z2_ring=force_sensed.points[2].point.z
-                    self.offset_z3_ring=force_sensed.points[3].point.z
+                    self.offset_x0_ri=force_sensed.points[0].point.x
+                    self.offset_x1_ri=force_sensed.points[1].point.x
+                    self.offset_x2_ri=force_sensed.points[2].point.x
+                    self.offset_x3_ri=force_sensed.points[3].point.x                          
+                    self.offset_y0_ri=force_sensed.points[0].point.y
+                    self.offset_y1_ri=force_sensed.points[1].point.y
+                    self.offset_y2_ri=force_sensed.points[2].point.y
+                    self.offset_y3_ri=force_sensed.points[3].point.y                    
+                    self.offset_z0_ri=force_sensed.points[0].point.z
+                    self.offset_z1_ri=force_sensed.points[1].point.z
+                    self.offset_z2_ri=force_sensed.points[2].point.z
+                    self.offset_z3_ri=force_sensed.points[3].point.z
                     # print("offset_z1,offset_z2,offset_z3,offset_z4", self.offset_z0_ring,self.offset_z1_ring,self.offset_z2_ring,self.offset_z3_ring)
                     self.first_received_ring=1
 
-            n_m_x1=force_sensed.points[0].point.x - (-639);       n_m_x2=force_sensed.points[1].point.x - (-500)
-            n_m_x3=force_sensed.points[2].point.x - (419);        n_m_x4=force_sensed.points[3].point.x - (345)
+            # n_m_x1=force_sensed.points[0].point.x - (-639);       n_m_x2=force_sensed.points[1].point.x - (-500)
+            # n_m_x3=force_sensed.points[2].point.x - (419);        n_m_x4=force_sensed.points[3].point.x - (345)
 
-            n_m_y1=force_sensed.points[0].point.y - (-1040);      n_m_y2=force_sensed.points[1].point.y - (655)
-            n_m_y3=force_sensed.points[2].point.y - (718);        n_m_y4=force_sensed.points[3].point.y - (-1077)
+            # n_m_y1=force_sensed.points[0].point.y - (-1040);      n_m_y2=force_sensed.points[1].point.y - (655)
+            # n_m_y3=force_sensed.points[2].point.y - (718);        n_m_y4=force_sensed.points[3].point.y - (-1077)
 
-            # n_m_z1=force_sensed.points[0].point.z - (2629);       n_m_z2=force_sensed.points[1].point.z - (2636)
-            # n_m_z3=force_sensed.points[2].point.z - (2345);       n_m_z4=force_sensed.points[3].point.z - (2660)
-            #soft
-            n_m_z1=force_sensed.points[0].point.z - (self.offset_z0_ring);       n_m_z2=force_sensed.points[1].point.z - (self.offset_z1_ring)
-            n_m_z3=force_sensed.points[2].point.z - (self.offset_z2_ring);       n_m_z4=force_sensed.points[3].point.z - (self.offset_z3_ring)
+            # # n_m_z1=force_sensed.points[0].point.z - (2629);       n_m_z2=force_sensed.points[1].point.z - (2636)
+            # # n_m_z3=force_sensed.points[2].point.z - (2345);       n_m_z4=force_sensed.points[3].point.z - (2660)
+            # #soft
+            # n_m_z1=force_sensed.points[0].point.z - (self.offset_z0_ring);       n_m_z2=force_sensed.points[1].point.z - (self.offset_z1_ring)
+            # n_m_z3=force_sensed.points[2].point.z - (self.offset_z2_ring);       n_m_z4=force_sensed.points[3].point.z - (self.offset_z3_ring)
+
+            n_m_x1=force_sensed.points[0].point.x - (self.offset_x0_ri);      n_m_x2=force_sensed.points[1].point.x - (self.offset_x1_ri)
+            n_m_x3=force_sensed.points[2].point.x - (self.offset_x2_ri);        n_m_x4=force_sensed.points[3].point.x - (self.offset_x3_ri)
+
+            n_m_y1=force_sensed.points[0].point.y - (self.offset_y0_ri);      n_m_y2=force_sensed.points[1].point.y - (self.offset_y1_ri)
+            n_m_y3=force_sensed.points[2].point.y - (self.offset_y2_ri);        n_m_y4=force_sensed.points[3].point.y - (self.offset_y3_ri)
+
+            n_m_z1=force_sensed.points[0].point.z - (self.offset_z0_ri);       n_m_z2=force_sensed.points[1].point.z - (self.offset_z1_ri)
+            n_m_z3=force_sensed.points[2].point.z - (self.offset_z2_ri);       n_m_z4=force_sensed.points[3].point.z - (self.offset_z3_ri)
 
             ring_force = WrenchStamped()
             ring_force4 = WrenchStamped()
@@ -133,21 +164,36 @@ class CrispFingertipNode(object):
         elif force_sensed.sensorid == 3:
             if self.first_received_mid==0:
                 if force_sensed.points[0].point.z>-10000:
-                    self.offset_z0_mid=force_sensed.points[0].point.z
-                    self.offset_z1_mid=force_sensed.points[1].point.z
-                    self.offset_z2_mid=force_sensed.points[2].point.z
-                    self.offset_z3_mid=force_sensed.points[3].point.z
+                    self.offset_x0_mi=force_sensed.points[0].point.x
+                    self.offset_x1_mi=force_sensed.points[1].point.x
+                    self.offset_x2_mi=force_sensed.points[2].point.x
+                    self.offset_x3_mi=force_sensed.points[3].point.x                          
+                    self.offset_y0_mi=force_sensed.points[0].point.y
+                    self.offset_y1_mi=force_sensed.points[1].point.y
+                    self.offset_y2_mi=force_sensed.points[2].point.y
+                    self.offset_y3_mi=force_sensed.points[3].point.y                    
+                    self.offset_z0_mi=force_sensed.points[0].point.z
+                    self.offset_z1_mi=force_sensed.points[1].point.z
+                    self.offset_z2_mi=force_sensed.points[2].point.z
+                    self.offset_z3_mi=force_sensed.points[3].point.z
                     self.first_received_mid=1
 
-            n_m_x1=force_sensed.points[0].point.x - (-975);      n_m_x2=force_sensed.points[1].point.x - (-810)
-            n_m_x3=force_sensed.points[2].point.x - (364);       n_m_x4=force_sensed.points[3].point.x - (331)
+            # n_m_x1=force_sensed.points[0].point.x - (-975);      n_m_x2=force_sensed.points[1].point.x - (-810)
+            # n_m_x3=force_sensed.points[2].point.x - (364);       n_m_x4=force_sensed.points[3].point.x - (331)
 
-            n_m_y1=force_sensed.points[0].point.y - (-1230);     n_m_y2=force_sensed.points[1].point.y - (776)
-            n_m_y3=force_sensed.points[2].point.y - (826);       n_m_y4=force_sensed.points[3].point.y - (-1275)
+            # n_m_y1=force_sensed.points[0].point.y - (-1230);     n_m_y2=force_sensed.points[1].point.y - (776)
+            # n_m_y3=force_sensed.points[2].point.y - (826);       n_m_y4=force_sensed.points[3].point.y - (-1275)
 
-            n_m_z1=force_sensed.points[0].point.z - (self.offset_z0_mid);      n_m_z2=force_sensed.points[1].point.z - (self.offset_z1_mid)
-            n_m_z3=force_sensed.points[2].point.z - (self.offset_z2_mid);      n_m_z4=force_sensed.points[3].point.z - (self.offset_z3_mid)
+            # n_m_z1=force_sensed.points[0].point.z - (self.offset_z0_mid);      n_m_z2=force_sensed.points[1].point.z - (self.offset_z1_mid)
+            # n_m_z3=force_sensed.points[2].point.z - (self.offset_z2_mid);      n_m_z4=force_sensed.points[3].point.z - (self.offset_z3_mid)
+            n_m_x1=force_sensed.points[0].point.x - (self.offset_x0_mi);        n_m_x2=force_sensed.points[1].point.x - (self.offset_x1_mi)
+            n_m_x3=force_sensed.points[2].point.x - (self.offset_x2_mi);        n_m_x4=force_sensed.points[3].point.x - (self.offset_x3_mi)
 
+            n_m_y1=force_sensed.points[0].point.y - (self.offset_y0_mi);        n_m_y2=force_sensed.points[1].point.y - (self.offset_y1_mi)
+            n_m_y3=force_sensed.points[2].point.y - (self.offset_y2_mi);        n_m_y4=force_sensed.points[3].point.y - (self.offset_y3_mi)
+
+            n_m_z1=force_sensed.points[0].point.z - (self.offset_z0_mi);       n_m_z2=force_sensed.points[1].point.z - (self.offset_z1_mi)
+            n_m_z3=force_sensed.points[2].point.z - (self.offset_z2_mi);       n_m_z4=force_sensed.points[3].point.z - (self.offset_z3_mi)
             mid_force = WrenchStamped()
             mid4_force = WrenchStamped()
 
@@ -170,23 +216,40 @@ class CrispFingertipNode(object):
         elif force_sensed.sensorid == 4:
             if self.first_received_in==0:
                 if force_sensed.points[0].point.z>-10000:
+                    self.offset_x0_in=force_sensed.points[0].point.x
+                    self.offset_x1_in=force_sensed.points[1].point.x
+                    self.offset_x2_in=force_sensed.points[2].point.x
+                    self.offset_x3_in=force_sensed.points[3].point.x                          
+                    self.offset_y0_in=force_sensed.points[0].point.y
+                    self.offset_y1_in=force_sensed.points[1].point.y
+                    self.offset_y2_in=force_sensed.points[2].point.y
+                    self.offset_y3_in=force_sensed.points[3].point.y                    
                     self.offset_z0_in=force_sensed.points[0].point.z
                     self.offset_z1_in=force_sensed.points[1].point.z
                     self.offset_z2_in=force_sensed.points[2].point.z
                     self.offset_z3_in=force_sensed.points[3].point.z
                     self.first_received_in=1            
-            n_m_x1=force_sensed.points[0].point.x - (-394);      n_m_x2=force_sensed.points[1].point.x - (-286)
-            n_m_x3=force_sensed.points[2].point.x - (994);       n_m_x4=force_sensed.points[3].point.x - (682)
+            # n_m_x1=force_sensed.points[0].point.x - (-394);      n_m_x2=force_sensed.points[1].point.x - (-286)
+            # n_m_x3=force_sensed.points[2].point.x - (994);       n_m_x4=force_sensed.points[3].point.x - (682)
 
-            n_m_y1=force_sensed.points[0].point.y - (-778);     n_m_y2=force_sensed.points[1].point.y - (1023)
-            n_m_y3=force_sensed.points[2].point.y - (850);      n_m_y4=force_sensed.points[3].point.y - (-940)
+            # n_m_y1=force_sensed.points[0].point.y - (-778);     n_m_y2=force_sensed.points[1].point.y - (1023)
+            # n_m_y3=force_sensed.points[2].point.y - (850);      n_m_y4=force_sensed.points[3].point.y - (-940)
 
-            # n_m_z1=force_sensed.points[0].point.z - (2879);      n_m_z2=force_sensed.points[1].point.z - (2541)
-            # n_m_z3=force_sensed.points[2].point.z - (2423);      n_m_z4=force_sensed.points[3].point.z - (2555)
+            # # n_m_z1=force_sensed.points[0].point.z - (2879);      n_m_z2=force_sensed.points[1].point.z - (2541)
+            # # n_m_z3=force_sensed.points[2].point.z - (2423);      n_m_z4=force_sensed.points[3].point.z - (2555)
 
-            #soft
-            n_m_z1=force_sensed.points[0].point.z - (self.offset_z0_in);      n_m_z2=force_sensed.points[1].point.z - (self.offset_z1_in)
-            n_m_z3=force_sensed.points[2].point.z - (self.offset_z2_in);      n_m_z4=force_sensed.points[3].point.z - (self.offset_z3_in)
+            # #soft
+            # n_m_z1=force_sensed.points[0].point.z - (self.offset_z0_in);      n_m_z2=force_sensed.points[1].point.z - (self.offset_z1_in)
+            # n_m_z3=force_sensed.points[2].point.z - (self.offset_z2_in);      n_m_z4=force_sensed.points[3].point.z - (self.offset_z3_in)
+
+            n_m_x1=force_sensed.points[0].point.x - (self.offset_x0_in);        n_m_x2=force_sensed.points[1].point.x - (self.offset_x1_in)
+            n_m_x3=force_sensed.points[2].point.x - (self.offset_x2_in);        n_m_x4=force_sensed.points[3].point.x - (self.offset_x3_in)
+
+            n_m_y1=force_sensed.points[0].point.y - (self.offset_y0_in);        n_m_y2=force_sensed.points[1].point.y - (self.offset_y1_in)
+            n_m_y3=force_sensed.points[2].point.y - (self.offset_y2_in);        n_m_y4=force_sensed.points[3].point.y - (self.offset_y3_in)
+
+            n_m_z1=force_sensed.points[0].point.z - (self.offset_z0_in);        n_m_z2=force_sensed.points[1].point.z - (self.offset_z1_in)
+            n_m_z3=force_sensed.points[2].point.z - (self.offset_z2_in);        n_m_z4=force_sensed.points[3].point.z - (self.offset_z3_in)
 
             in_force = WrenchStamped()
             in_force4 = WrenchStamped()

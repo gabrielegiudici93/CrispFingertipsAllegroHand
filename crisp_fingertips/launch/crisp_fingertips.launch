@@ -1,3 +1,0 @@
-<launch>
-    <node name="crisp_fingertips_node" pkg="crisp_fingertips" type="crisp_fingertips_publisher.py" output="screen"/>
-</launch>
